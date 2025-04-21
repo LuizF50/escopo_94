@@ -1,0 +1,405 @@
+// Variáveis
+$dark-blue: #222;
+$green: #90feb5;
+$action-color: $green;
+
+// Estilos base
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #0f0f1a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+h1 {
+    margin: 20px 0;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $green;
+    text-shadow: 0 0 10px rgba($green, 0.5);
+}
+
+.instruction {
+    margin-bottom: 20px;
+    max-width: 800px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+// Estilos para o input da matriz
+.matrix-input-container {
+    margin: 20px 0;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.matrix-input {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    border: 2px solid $green;
+    border-radius: 8px;
+    resize: vertical;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    margin-top: 10px;
+
+    &:focus {
+        outline: none;
+        border-color: $green;
+        box-shadow: 0 0 10px rgba($green, 0.5);
+    }
+}
+
+// Container da legenda
+.legend-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 1px solid $green;
+    width: 100%;
+    max-width: 600px;
+}
+
+.legend-title {
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: $green;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.legend-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+
+    @media (max-width: 500px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    padding: 8px 12px;
+    background-color: rgba($green, 0.1);
+    border-radius: 6px;
+}
+
+.legend-char {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: $green;
+    width: 20px;
+    text-align: center;
+}
+
+.legend-emoji {
+    font-size: 1.2rem;
+    width: 30px;
+    text-align: center;
+}
+
+// Container do jogo
+.game-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    animation: hue-rotate 10s linear infinite;
+    padding: 20px;
+}
+
+// Labirinto
+#maze-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border: 2px solid $green;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba($green, 0.3);
+}
+
+.maze-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.05);
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba($green, 0.5);
+    }
+
+    &.path {
+        background-color: rgba($green, 0.3);
+    }
+
+    &.current {
+        animation: pulse 1.5s infinite;
+    }
+}
+
+// Controles
+.controls {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.control-btn {
+    background-color: $dark-blue;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+
+    &:hover {
+        background-color: $green;
+        color: $dark-blue;
+    }
+}
+
+// Resultados
+.result-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    border: 1px solid $green;
+    width: 100%;
+    max-width: 500px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: $green;
+}
+
+#path-result {
+    font-family: monospace;
+    word-break: break-all;
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+// Animações
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba($green, 0.7);
+    }
+
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba($green, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba($green, 0);
+    }
+}
+
+@keyframes hue-rotate {
+    from {
+        filter: hue-rotate(0);
+    }
+
+    to {
+        filter: hue-rotate(360deg);
+    }
+}
+
+// Container do botão
+.button-container {
+    margin-top: 40px;
+    padding: 20px;
+}
+
+// Estilos do botão animado
+.goo {
+    position: absolute;
+    visibility: hidden;
+    width: 1px;
+    height: 1px;
+}
+
+.button {
+    -webkit-font-smoothing: antialiased;
+    background-color: $dark-blue;
+    border: none;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 100;
+    text-decoration: none;
+    user-select: none;
+    letter-spacing: 1px;
+    color: white;
+    padding: 20px 40px;
+    text-transform: uppercase;
+    transition: all 0.1s ease-out;
+
+    &:hover {
+        background-color: $action-color;
+        color: #fff;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    &--bubble {
+        position: relative;
+        z-index: 2;
+        color: white;
+        background: none;
+
+        &:hover {
+            background: none;
+        }
+
+        &:hover+.button--bubble__effect-container .circle {
+            background: darken($action-color, 15%);
+        }
+
+        &:hover+.button--bubble__effect-container .button {
+            background: darken($action-color, 15%);
+        }
+
+        &:active+.button--bubble__effect-container {
+            transform: scale(0.95);
+        }
+
+        &__container {
+            position: relative;
+            display: inline-block;
+
+            .effect-button {
+                position: absolute;
+                width: 50%;
+                height: 25%;
+                top: 50%;
+                left: 25%;
+                z-index: 1;
+                transform: translateY(-50%);
+                background: $dark-blue;
+                transition: background 0.1s ease-out;
+            }
+        }
+    }
+}
+
+.button--bubble__effect-container {
+    position: absolute;
+    display: block;
+    width: 200%;
+    height: 400%;
+    top: -150%;
+    left: -50%;
+    -webkit-filter: url("#goo");
+    filter: url("#goo");
+    transition: all 0.1s ease-out;
+    pointer-events: none;
+
+    .circle {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        border-radius: 15px;
+        background: $dark-blue;
+        transition: background 0.1s ease-out;
+
+        &.top-left {
+            top: 40%;
+            left: 27%;
+        }
+
+        &.bottom-right {
+            bottom: 40%;
+            right: 27%;
+        }
+    }
+}
+
+// Media queries para responsividade
+@media (max-width: 600px) {
+    .game-container {
+        padding: 10px;
+    }
+
+    #maze-container {
+        gap: 3px;
+        padding: 5px;
+    }
+
+    .maze-cell {
+        font-size: clamp(1rem, 4vw, 2rem);
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .control-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+}

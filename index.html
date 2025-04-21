@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labirinto Místico do Feiticeiro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <h1>Labirinto Místico do Feiticeiro</h1>
+
+    <div class="instruction">
+        <p>Bem-vindo, jovem aventureiro! 🧙‍♂️ Você aceitou o desafio de atravessar o temido Labirinto do Feiticeiro.
+            Descubra o caminho mais curto para sair do labirinto mágico!</p>
+    </div>
+
+    <!-- Área de input da matriz -->
+    <div class="matrix-input-container">
+        <label for="maze-input">Insira a matriz do labirinto:</label>
+        <textarea id="maze-input" class="matrix-input"
+            placeholder="Exemplo:&#10;[&#10;  ['#', 'S', '.', '.'],&#10;  ['#', '#', '.', '#'],&#10;  ['.', '.', '.', '#'],&#10;  ['.', '#', 'E', '#']&#10;]"></textarea>
+    </div>
+
+    <!-- Legenda melhorada -->
+    <div class="legend-container">
+        <div class="legend-title">Legenda dos Símbolos:</div>
+        <div class="legend-grid">
+            <div class="legend-item">
+                <span class="legend-char">#</span> = <span class="legend-emoji">🚧</span> Parede
+            </div>
+            <div class="legend-item">
+                <span class="legend-char">S</span> = <span class="legend-emoji">🏃‍♂️➡️</span> Ponto de Partida
+            </div>
+            <div class="legend-item">
+                <span class="legend-char">E</span> = <span class="legend-emoji">🚪</span> Saída
+            </div>
+            <div class="legend-item">
+                <span class="legend-char">.</span> = <span class="legend-emoji">🛣️</span> Caminho
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div id="maze-container"></div>
+
+        <div class="controls">
+            <button class="control-btn" id="solve-btn">Resolver Labirinto</button>
+            <button class="control-btn" id="clear-btn">Limpar</button>
+            <button class="control-btn" id="animate-btn">Animar Solução</button>
+        </div>
+
+        <div class="result-container">
+            <div class="result-title">Caminho mais curto:</div>
+            <div id="path-result">Clique em "Resolver Labirinto" para encontrar o caminho.</div>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="goo">
+            <defs>
+                <filter id="goo">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                        result="goo" />
+                    <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+                </filter>
+            </defs>
+        </svg>
+
+        <span class="button--bubble__container">
+            <a href="#" class="button button--bubble" id="reset-maze-btn">
+                Reiniciar
+            </a>
+            <span class="button--bubble__effect-container">
+                <span class="circle top-left"></span>
+                <span class="circle top-left"></span>
+                <span class="circle top-left"></span>
+
+                <span class="button effect-button"></span>
+
+                <span class="circle bottom-right"></span>
+                <span class="circle bottom-right"></span>
+                <span class="circle bottom-right"></span>
+            </span>
+        </span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="script.js"></script>
+    <script src="button.js"></script>
+</body>
+
+</html>
